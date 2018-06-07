@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="765.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kulubema.bookdatabase.BookListController">
+   <children>
+      <TableView fx:id="bookListTable" layoutX="95.0" layoutY="90.0" prefHeight="200.0" prefWidth="563.0">
+        <columns>
+            <TableColumn fx:id="bookID" prefWidth="75.0" text="BookID" />
+          <TableColumn fx:id="title" prefWidth="125.0" text="Title" />
+          <TableColumn fx:id="author" prefWidth="125.0" text="Author" />
+            <TableColumn fx:id="genre" prefWidth="125.0" text="Genre" />
+            <TableColumn fx:id="status" prefWidth="125.0" text="Status" />
+        </columns>
+      </TableView>
+      <TextField fx:id="titleNew" layoutX="63.0" layoutY="371.0" />
+      <TextField fx:id="authorNew" layoutX="227.0" layoutY="371.0" />
+      <TextField fx:id="genreNew" layoutX="389.0" layoutY="371.0" />
+      <Button fx:id="addNewBook" layoutX="553.0" layoutY="372.0" mnemonicParsing="false" onAction="#NewBook" prefWidth="149.0" text="Add New Book" />
+      <Button fx:id="removeBook" layoutX="225.0" layoutY="414.0" mnemonicParsing="false" onAction="#RemoveBook" prefWidth="149.0" text="Remove Book" />
+      <Label alignment="CENTER" layoutX="278.0" layoutY="38.0" prefWidth="149.0" text="My Reading List">
+         <font>
+            <Font name="Times New Roman Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="553.0" layoutY="348.0" prefWidth="149.0" text="Click To Add">
+         <font>
+            <Font name="Times New Roman Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="63.0" layoutY="348.0" prefWidth="149.0" text="Title">
+         <font>
+            <Font name="Times New Roman Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="227.0" layoutY="348.0" prefWidth="149.0" text="Author">
+         <font>
+            <Font name="Times New Roman Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="389.0" layoutY="348.0" prefWidth="149.0" text="Genre">
+         <font>
+            <Font name="Times New Roman Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="308.0" layoutY="309.0" prefWidth="149.0" text="Enter New Book">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="59.0" layoutY="416.0" prefWidth="149.0" text="Click To Remove">
+         <font>
+            <Font name="Times New Roman Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="389.0" layoutY="416.0" prefWidth="149.0" text="Change Status">
+         <font>
+            <Font name="Times New Roman Bold" size="12.0" />
+         </font>
+      </Label>
+      <Button fx:id="read" layoutX="543.0" layoutY="414.0" mnemonicParsing="false" onAction="#ChangeStatus" prefWidth="74.5" text="Read" />
+      <Button fx:id="notRead" layoutX="638.0" layoutY="414.0" mnemonicParsing="false" onAction="#ChangeStatus" prefWidth="74.5" text="Not Read" />
+   </children>
+</AnchorPane>
