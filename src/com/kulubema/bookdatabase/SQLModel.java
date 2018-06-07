@@ -11,37 +11,79 @@ import java.sql.*;
 public class SQLModel {
 
     private Connection connection;
+    private Statement statement;
+    private ResultSet resultSet;
+
+    // JDBC driver name and database URL
+    private String jdbcDriver = "com.mysql.jdbc.Driver";
+    private String databaseURL = "jdbc:mysql://localhost/";
+
+    //  Database credentials
+    private String username = "USERNAME";
+    private String password = "PASSWORD";
 
     public SQLModel() throws SQLException {
+        createDatabase();
         connection = DriverManager.getConnection("" +
-                "jdbc:mysql://localhost:3306/my_reading_list?autoReconnect=true&useSSL=false", "USERNAME", "PASSWORD");
+                "jdbc:mysql://localhost:3306/book_list?autoReconnect=true&useSSL=false", username, password);
         createTable();
         createConnection();
     }
 
     /**
-     * This method creates the table for the reading list in the database.
+     * This method creates the book_list database in the MySQL server..
+     */
+
+    public void createDatabase() {
+        connection = null;
+        statement = null;
+
+        try {
+            // Register JDBC driver
+            Class.forName(jdbcDriver);
+
+            // Open Connection
+            connection = DriverManager.getConnection(databaseURL, username, password);
+
+            statement = connection.createStatement();
+
+            String sql = "CREATE DATABASE IF NOT EXISTS BOOK_LIST;";
+
+            statement.execute(sql);
+            statement.close();
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * This method creates the reading_list table in the database.
      * @throws SQLException
      */
     public void createTable() throws SQLException {
         String q = "CREATE TABLE IF NOT EXISTS READING_LIST(" +
+                "BookID int(11)," +
                 "Title varchar(100)," +
                 "Author varchar(100)," +
                 "Genre varchar(100)," +
                 "Status varchar(100)" +
                 ");";
-        Statement stmt = connection.createStatement();
-        stmt.execute(q);
-        stmt.close();
+        statement = connection.createStatement();
+        statement.execute(q);
+        statement.close();
     }
 
     public void createConnection() throws SQLException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM READING_LIST");
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM READING_LIST");
 
-            stmt.close();
+            statement.close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
