@@ -6,10 +6,10 @@ A basic reading list desktop GUI app that connects to, and stores data in a MySQ
 
 - MySQL server:<br />
 https://dev.mysql.com/downloads/<br />
-<br />
+
 - JDBC i.e MySQL Connector:<br />
 https://www.mysql.com/products/connector/<br />
-<br />
+
 ### Configurations
 In src/config.json specify the username and password to the MySQL server.<br />
 - e.g:<br />
