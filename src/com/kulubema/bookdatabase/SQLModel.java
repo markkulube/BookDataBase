@@ -60,8 +60,7 @@ public class SQLModel {
 			this.port = (long) jsonObject.get("MYSQL_PORT");
 			this.jdbcDriver = (String) jsonObject.get("MYSQL_DRIVER");
 			this.databaseURL = (String) jsonObject.get("MYSQL_URL");
-			
-			System.out.println(obj);
+
 	
 		} catch (Exception e) {
 			e.printStackTrace();
