@@ -1,12 +1,20 @@
 package com.kulubema.bookdatabase;
 
+import java.io.FileReader;
 /**
  * @author Mark Kulube (markkulube@gmail.com)
  *
  * An SQLModel object connects the database to the BookListApp.
  */
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import java.sql.*;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 public class SQLModel {
 
@@ -14,20 +22,49 @@ public class SQLModel {
     private Statement statement;
     private ResultSet resultSet;
 
-    // JDBC driver name and database URL
-    private String jdbcDriver = "com.mysql.jdbc.Driver";
-    private String databaseURL = "jdbc:mysql://localhost/";
+    // JDBC driver name, database URL and port
+    private String jdbcDriver;
+    private String databaseURL;
+    private long port;
 
     //  Database credentials
-    private String username = "USERNAME";
-    private String password = "PASSWORD";
+    private String username;
+    private String password;
 
     public SQLModel() throws SQLException {
+    	initDatabaseCredentials();
         createDatabase();
-        connection = DriverManager.getConnection("" +
-                "jdbc:mysql://localhost:3306/book_list?autoReconnect=true&useSSL=false", username, password);
+//        connection = DriverManager.getConnection("" +
+//                "jdbc:mysql://localhost:3306/book_list?autoReconnect=true&useSSL=false", username, password);
+        //connection = DriverManager.getConnection("jdbc:mysql://localhost:"  + port + "/book_list?autoReconnect=true&useSSL=false", username, password);
+        connection = DriverManager.getConnection(databaseURL.substring(0, databaseURL.length() - 1)  + ":" + port + "/book_list?autoReconnect=true&useSSL=false", username, password);
         createTable();
         createConnection();
+    }
+    
+    
+    /**
+     * Initialize username, password, port, jdbcDriver, and databaseURL from src/config.json
+     */
+    public void initDatabaseCredentials() {
+    	
+        JSONParser parser = new JSONParser();
+		try {
+			Object obj = parser.parse(new FileReader("config.json"));
+ 
+			// A JSON object. Key value pairs are unordered. JSONObject supports java.util.Map interface.
+			JSONObject jsonObject = (JSONObject) obj;
+			
+			this.username = (String) jsonObject.get("MYSQL_USER");
+			this.password = (String) jsonObject.get("MYSQL_PASS");
+			this.port = (long) jsonObject.get("MYSQL_PORT");
+			this.jdbcDriver = (String) jsonObject.get("MYSQL_DRIVER");
+			this.databaseURL = (String) jsonObject.get("MYSQL_URL");
+
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
     /**
@@ -110,7 +147,6 @@ public class SQLModel {
         preparedStatement.setString(3, author);
         preparedStatement.setString(4, genre);
         preparedStatement.setString(5, status);
-
 
         preparedStatement.execute();
         preparedStatement.close();
